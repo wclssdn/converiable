@@ -93,7 +93,7 @@ public class test {
 
 ```text
 source: Source{integer=1, aLong=2, string='c', aObject=AObject{x=100}, aBoolean=true, aSource=ASource{v=666}, aFloat2otherName=123.456, aSource2target=ASource{v=9}, aNull=null, noGetter=222, aInt=333, aDouble=444.0}
-target: Target2{integer=1, aLong2=2, string='c', aObject=AObject{x=100}, aBoolean=true, aSource=null, otherName=null, aTarget=null, aNull=null, noGetter=null, aInt=333, aDouble=444.0}
+target: Target2{integer=1, aLong2=2, string='c', aObject=AObject{x=100}, aBoolean=true, aSource=ATarget{vv=666}, otherName=123.456, aTarget=ATarget{vv=9}, aNull=null, noGetter=null, aInt=333, aDouble=444.0}
 ```
 
 # 应用场景

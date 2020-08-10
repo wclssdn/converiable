@@ -122,8 +122,15 @@ public class Converter {
      * @return 通过when()选择的注解
      */
     private static Convertible chooseFieldAnnotation(Convertible[] convertibles, Class<?> targetClass) {
+        // 有明确指定的优先使用
         for (Convertible convertible : convertibles) {
             if (convertible.when() == targetClass) {
+                return convertible;
+            }
+        }
+        // 没有明确指定的情况下，使用第一个没有指定when的注解
+        for (Convertible convertible : convertibles) {
+            if (convertible.when() == Class.class) {
                 return convertible;
             }
         }
