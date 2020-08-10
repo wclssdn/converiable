@@ -154,14 +154,14 @@ public class Converter {
     }
 
     private static String generateGetterMethodName(String fieldName) {
-        return "get" + toUpperCaseFirstOne(fieldName);
+        return "get" + upperCaseFirst(fieldName);
     }
 
     private static String generateSetterMethodName(String fieldName) {
-        return "set" + toUpperCaseFirstOne(fieldName);
+        return "set" + upperCaseFirst(fieldName);
     }
 
-    private static String toUpperCaseFirstOne(String s) {
+    private static String upperCaseFirst(String s) {
         // Abc/aBc
         if (Character.isUpperCase(s.charAt(0))) {
             return s;
