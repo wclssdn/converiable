@@ -89,6 +89,13 @@ public class test {
 }
 ```
 
+结果：
+
+```text
+source: Source{integer=1, aLong=2, string='c', aObject=AObject{x=100}, aBoolean=true, aSource=ASource{v=666}, aFloat2otherName=123.456, aSource2target=ASource{v=9}, aNull=null, noGetter=222, aInt=333, aDouble=444.0}
+target: Target2{integer=1, aLong2=2, string='c', aObject=AObject{x=100}, aBoolean=true, aSource=null, otherName=null, aTarget=null, aNull=null, noGetter=null, aInt=333, aDouble=444.0}
+```
+
 # 应用场景
 
 - DO、DTO、VO、PO等互转的场景
@@ -98,4 +105,5 @@ public class test {
 # TODO 
 
 - [x] 优化写法，支持用多个注解实现多组转换规则
+- [ ] 基本类型和包装类型自动转换
 - [ ] 补充单元测试
