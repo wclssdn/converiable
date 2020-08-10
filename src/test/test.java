@@ -9,7 +9,7 @@ public class test {
         Source source = new Source(1, 2L, "c", new AObject(100), true,
                 new ASource(666), 123.456f, new ASource(9), null,
                 222, 333, 444);
-        Target target = new Target();
+        Target2 target = new Target2();
         try {
             Converter.convert(source, target);
         } catch (NoConvertibleAnnotationException | NoConvertibleTargetException e) {

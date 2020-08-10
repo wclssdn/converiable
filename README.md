@@ -5,23 +5,25 @@
 源类：`Source` 和目标类：`Target`属性几乎无异，但是也存在一定不同。需要转换的时候，可以使用`@Convertible`注解实现。
 
 ```java
-@Convertible(targets = Target.class)
+// 支持写多个注解
+@Convertible(target = Target.class)
+@Convertible(target = Target2.class)
 public class Source {
     private Integer integer;
-    // 如果源getter比较特殊，可以指定。目标setter比较特殊，也可以指定
-    @Convertible(getter = "getaLong", setter = "setaLong")
+    // 转换为不同对象时，目标属性名称不同
+    @Convertible(when = Target2.class, field = "aLong2")
     private Long aLong;
     private String string;
     private AObject aObject;
     private Boolean aBoolean;
     // 不同的类型,需要注意的是,ASource中也需要使用注解进行处理
-    @Convertible(targets = ATarget.class)
+    @Convertible(target = ATarget.class)
     private ASource aSource;
     // 不同的属性名
     @Convertible(field = "otherName")
     private Float aFloat2otherName;
     // 不同的类型 & 不同的属性名
-    @Convertible(targets = ATarget.class, field = "aTarget")
+    @Convertible(target = ATarget.class, field = "aTarget")
     private ASource aSource2target;
     private Integer aNull;
     private Integer noGetter;
@@ -30,22 +32,12 @@ public class Source {
 }
 ```
 
-属性目标类：
-
-```java
-@Convertible(targets = ATarget.class)
-public class ASource {
-    @Convertible(field = "vv")
-    private Integer v;
-}
-```
-
 目标类：
 
 ```java
-public class Target {
+public class Target2 {
     private Integer integer;
-    private Long aLong;
+    private Long aLong2;
     private String string;
     private AObject aObject;
     private Boolean aBoolean;
@@ -59,6 +51,43 @@ public class Target {
 }
 ```
 
+属性`aSource`源类：
+
+```java
+@Convertible(target = ATarget.class)
+public class ASource {
+    @Convertible(field = "vv")
+    private Integer v;
+}
+```
+
+属性`aSource`目标类：
+
+```java
+public class ATarget {
+    private Integer vv;
+}
+```
+
+使用方式：
+
+```java
+public class test {
+    public static void main(String[] args) {
+        Source source = new Source(1, 2L, "c", new AObject(100), true,
+                new ASource(666), 123.456f, new ASource(9), null,
+                222, 333, 444);
+        Target target = new Target();
+        try {
+            Converter.convert(source, target);
+        } catch (NoConvertibleAnnotationException | NoConvertibleTargetException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("source: %s\n", source.toString());
+        System.out.printf("target: %s\n", target.toString());
+    }
+}
+```
 
 # 应用场景
 
@@ -68,5 +97,5 @@ public class Target {
 
 # TODO 
 
-- [] 优化写法，支持用多个注解实现多组转换规则
-- [] 补充单元测试
+- [x] 优化写法，支持用多个注解实现多组转换规则
+- [ ] 补充单元测试

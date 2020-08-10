@@ -2,23 +2,24 @@ package test;
 
 import converter.Convertible;
 
-@Convertible(targets = Target.class)
+@Convertible(target = Target.class)
+@Convertible(target = Target2.class)
 public class Source {
     private Integer integer;
-    // 如果源getter比较特殊，可以指定。目标setter比较特殊，也可以指定
-    @Convertible(getter = "getaLong", setter = "setaLong")
+    // 转换为不同对象时，目标属性名称不同
+    @Convertible(when = Target2.class, field = "aLong2")
     private Long aLong;
     private String string;
     private AObject aObject;
     private Boolean aBoolean;
     // 不同的类型,需要注意的是,ASource中也需要使用注解进行处理
-    @Convertible(targets = ATarget.class)
+    @Convertible(target = ATarget.class)
     private ASource aSource;
     // 不同的属性名
     @Convertible(field = "otherName")
     private Float aFloat2otherName;
     // 不同的类型 & 不同的属性名
-    @Convertible(targets = ATarget.class, field = "aTarget")
+    @Convertible(target = ATarget.class, field = "aTarget")
     private ASource aSource2target;
     private Integer aNull;
     private Integer noGetter;

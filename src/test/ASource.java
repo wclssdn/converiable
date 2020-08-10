@@ -2,7 +2,7 @@ package test;
 
 import converter.Convertible;
 
-@Convertible(targets = ATarget.class)
+@Convertible(target = ATarget.class)
 public class ASource {
     @Convertible(field = "vv")
     private Integer v;
