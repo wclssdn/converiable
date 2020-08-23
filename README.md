@@ -100,7 +100,21 @@ target: Target2{integer=1, aLong2=2, string='c', aObject=AObject{x=100}, aBoolea
 
 - DO、DTO、VO、PO等互转的场景
 
+# Test
 
+| Package                          | Tests | Failures | Ignored | Duration | Success rate |
+|----------------------------------|-------|----------|---------|----------|--------------|
+| converter.cases.circle           | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.mixed            | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.name.different   | 1     | 0        | 0       | 0s       | 100%         |
+| converter.cases.name.same        | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.object2primitive | 1     | 0        | 0       | 0.017s   | 100%         |
+| converter.cases.primitive2object | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.type.different   | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.type.different2  | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.type.different3  | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.type.different4  | 1     | 0        | 0       | 0.001s   | 100%         |
+| converter.cases.type.same        | 1     | 0        | 0       | 0.001s   | 100%         |
 
 # TODO 
 
