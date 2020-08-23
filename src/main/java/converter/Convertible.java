@@ -7,8 +7,8 @@ import java.lang.annotation.*;
  * 使用在class上是为了方便使用
  * 定义在属性上的注解 优先级比class上的优先级高
  *
- * @author nemo <ssdn@vip.qq.com>
- * @link https://github.com/wclssdn/converiable
+ * @author nemo ssdn@vip.qq.com
+ * github https://github.com/wclssdn/converiable
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
@@ -32,17 +32,23 @@ public @interface Convertible {
     Class<?> when() default Class.class;
 
     /**
+     * 目标类的属性名 默认和源对象一致
+     *
      * @return 转换到的目标类属性名称
      */
     String field() default "";
 
     /**
-     * @return 源对象属性的getter方法名（如果不指定，则通过源属性名进行推导）
+     * 源对象属性的getter方法名（如果不指定，则通过源属性名进行推导）
+     *
+     * @return 源对象属性的getter方法名
      */
     String getter() default "";
 
     /**
-     * @return 目标字段的setter函数名（如果不指定，则优先通过field推导，如为提供，则按源field推导）
+     * 目标字段的setter函数名（如果不指定，则优先通过field推导，如为提供，则按源field推导）
+     *
+     * @return 目标字段的setter函数名
      */
     String setter() default "";
 }

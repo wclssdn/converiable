@@ -8,8 +8,8 @@ import java.lang.reflect.Method;
 /**
  * 基于注解的对象转换工具
  *
- * @author nemo <ssdn@vip.qq.com>
- * @link https://github.com/wclssdn/converiable
+ * @author nemo ssdn@vip.qq.com
+ * github https://github.com/wclssdn/converiable
  */
 public class Converter {
 
