@@ -37,7 +37,7 @@ public class Converter {
         Field[] sourceClassFields = sourceClass.getDeclaredFields();
         for (Field field : sourceClassFields) {
             Convertible fieldConvertible = chooseFieldAnnotation(getAnnotationsFromElement(field), targetClass);
-            String getterMethodName = generateGetterMethodName(field.getName());
+            String getterMethodName = generateGetterMethodName(field.getName(), field.getType().getTypeName());
             if (fieldConvertible != null && fieldConvertible.getter().length() > 0) {
                 getterMethodName = fieldConvertible.getter();
             }
@@ -197,7 +197,10 @@ public class Converter {
         return null;
     }
 
-    private static String generateGetterMethodName(String fieldName) {
+    private static String generateGetterMethodName(String fieldName, String typeName) {
+        if (typeName.equals("boolean")) {
+            return "is" + upperCaseFirst(fieldName);
+        }
         return "get" + upperCaseFirst(fieldName);
     }
 

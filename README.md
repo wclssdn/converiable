@@ -2,10 +2,10 @@
 
 ## 快速使用
 
-源类：`Source` 和目标类：`Target`属性几乎无异，但是也存在一定不同。需要转换的时候，可以使用`@Convertible`注解实现。
+源类：`Source` 和目标类：`Target`属性几乎无异，但是也存在一定不同。需要转换的时候，可以使用`@converter.Convertible`注解实现。
 
 ```java
-// 支持写多个注解
+import converter.Convertible;// 支持写多个注解
 @Convertible(target = Target.class)
 @Convertible(target = Target2.class)
 public class Source {
@@ -106,4 +106,4 @@ target: Target2{integer=1, aLong2=2, string='c', aObject=AObject{x=100}, aBoolea
 
 - [x] 优化写法，支持用多个注解实现多组转换规则
 - [x] 基本类型和包装类型自动转换
-- [ ] 补充单元测试
+- [x] 补充单元测试
