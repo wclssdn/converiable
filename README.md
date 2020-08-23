@@ -105,5 +105,5 @@ target: Target2{integer=1, aLong2=2, string='c', aObject=AObject{x=100}, aBoolea
 # TODO 
 
 - [x] 优化写法，支持用多个注解实现多组转换规则
-- [ ] 基本类型和包装类型自动转换
+- [x] 基本类型和包装类型自动转换
 - [ ] 补充单元测试

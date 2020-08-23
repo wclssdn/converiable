@@ -4,10 +4,13 @@ import converter.Convertible;
 
 @Convertible(target = Target.class)
 @Convertible(target = Target2.class)
+@Convertible(target = Target3.class)
 public class Source {
     private Integer integer;
+    private int int1;
     // 转换为不同对象时，目标属性名称不同
     @Convertible(when = Target2.class, field = "aLong2")
+    @Convertible(when = Target3.class, field = "aLong2")
     private Long aLong;
     private String string;
     private AObject aObject;
@@ -26,9 +29,10 @@ public class Source {
     private int aInt;
     private double aDouble;
 
-    public Source(Integer integer, Long aLong, String string, AObject aObject, Boolean aBoolean, ASource aSource,
+    public Source(Integer integer, int int1, Long aLong, String string, AObject aObject, Boolean aBoolean, ASource aSource,
                   Float aFloat2otherName, ASource aSource2target, Integer aNull, Integer noGetter, int aInt, double aDouble) {
         this.integer = integer;
+        this.int1 = int1;
         this.aLong = aLong;
         this.string = string;
         this.aObject = aObject;
@@ -48,6 +52,14 @@ public class Source {
 
     public void setInteger(Integer integer) {
         this.integer = integer;
+    }
+
+    public int getInt1() {
+        return int1;
+    }
+
+    public void setInt1(int int1) {
+        this.int1 = int1;
     }
 
     public Long getaLong() {
@@ -134,6 +146,7 @@ public class Source {
     public String toString() {
         return "Source{" +
                 "integer=" + integer +
+                ", int1=" + int1 +
                 ", aLong=" + aLong +
                 ", string='" + string + '\'' +
                 ", aObject=" + aObject +

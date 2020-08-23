@@ -30,7 +30,6 @@ public class Converter {
         if (convertibles.length == 0) {
             throw new NoConvertibleAnnotationException("Source " + sourceClass.toString() + " can't be convert. Use @" + Convertible.class + " to enable convert ability.");
         }
-
         Convertible convertible = chooseClassAnnotation(convertibles, targetClass);
         if (convertible == null) {
             throw new NoConvertibleTargetException("Source " + sourceClass.toString() + " can't be convert to " + targetClass.toString() + ".");
@@ -45,31 +44,18 @@ public class Converter {
             try {
                 Method getterMethod = sourceClass.getMethod(getterMethodName);
                 Object sourceFieldValue = getterMethod.invoke(source);
-
                 String targetFieldName = field.getName();
                 String setterMethodName = generateSetterMethodName(targetFieldName);
-
                 Class<?> targetFieldType = field.getType();
-                Method setterMethod = null;
-                try {
-                    setterMethod = targetClass.getMethod(setterMethodName, targetFieldType);
-                } catch (NoSuchMethodException ignored) {
-                }
+                Method setterMethod = getSetterMethod(targetFieldType, targetClass, setterMethodName);
                 if (fieldConvertible != null) {
                     if (fieldConvertible.setter().length() > 0) {
                         setterMethodName = fieldConvertible.setter();
-                        try {
-                            setterMethod = targetClass.getMethod(setterMethodName, targetFieldType);
-                        } catch (NoSuchMethodException ignored) {
-                        }
                     } else if (fieldConvertible.field().length() > 0) {
                         targetFieldName = fieldConvertible.field();
                         setterMethodName = generateSetterMethodName(targetFieldName);
                     }
-                    try {
-                        setterMethod = targetClass.getMethod(setterMethodName, targetFieldType);
-                    } catch (Exception ignored) {
-                    }
+                    setterMethod = getSetterMethod(targetFieldType, targetClass, setterMethodName);
                     if (setterMethod == null) {
                         targetFieldType = fieldConvertible.target();
                         try {
@@ -77,9 +63,7 @@ public class Converter {
                         } catch (Exception ignored) {
                         }
                     }
-
                 }
-
                 Object targetFieldObject = sourceFieldValue;
                 if (field.getType() != targetFieldType) {
                     targetFieldObject = targetFieldType.newInstance();
@@ -91,7 +75,6 @@ public class Converter {
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException ignored) {
             }
         }
-
     }
 
     /**
@@ -148,6 +131,67 @@ public class Converter {
         for (Convertible convertible : convertibles) {
             if (convertible.target() == targetClass) {
                 return convertible;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取setter方法
+     *
+     * @param targetFieldType  目标属性类型
+     * @param targetClass      目标类
+     * @param setterMethodName setter方法名
+     * @return setter方法
+     */
+    private static Method getSetterMethod(Class<?> targetFieldType, Class<?> targetClass, String setterMethodName) {
+        try {
+            return targetClass.getMethod(setterMethodName, targetFieldType);
+        } catch (NoSuchMethodException ignored) {
+            if (targetFieldType.isPrimitive()) {
+                try {
+                    switch (targetFieldType.getTypeName()) {
+                        case "int":
+                            return targetClass.getMethod(setterMethodName, Integer.class);
+                        case "long":
+                            return targetClass.getMethod(setterMethodName, Long.class);
+                        case "float":
+                            return targetClass.getMethod(setterMethodName, Float.class);
+                        case "double":
+                            return targetClass.getMethod(setterMethodName, Double.class);
+                        case "boolean":
+                            return targetClass.getMethod(setterMethodName, Boolean.class);
+                        case "char":
+                            return targetClass.getMethod(setterMethodName, Character.class);
+                        case "byte":
+                            return targetClass.getMethod(setterMethodName, Byte.class);
+                        case "short":
+                            return targetClass.getMethod(setterMethodName, Short.class);
+                    }
+                } catch (NoSuchMethodException ignored2) {
+                }
+            } else {
+                try {
+                    switch (targetFieldType.getTypeName()) {
+                        case "java.lang.Integer":
+                            return targetClass.getMethod(setterMethodName, int.class);
+                        case "java.lang.Long":
+                            return targetClass.getMethod(setterMethodName, long.class);
+                        case "java.lang.Float":
+                            return targetClass.getMethod(setterMethodName, float.class);
+                        case "java.lang.Double":
+                            return targetClass.getMethod(setterMethodName, double.class);
+                        case "java.lang.Boolean":
+                            return targetClass.getMethod(setterMethodName, boolean.class);
+                        case "java.lang.Character":
+                            return targetClass.getMethod(setterMethodName, char.class);
+                        case "java.lang.Byte":
+                            return targetClass.getMethod(setterMethodName, byte.class);
+                        case "java.lang.Short":
+                            return targetClass.getMethod(setterMethodName, short.class);
+                    }
+                } catch (NoSuchMethodException ignored2) {
+                }
             }
         }
         return null;
